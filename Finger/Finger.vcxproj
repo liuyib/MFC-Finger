@@ -187,6 +187,7 @@
     <ClInclude Include="FingerDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="step.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Finger.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="res\Finger.rc2" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Finger.ico" />
