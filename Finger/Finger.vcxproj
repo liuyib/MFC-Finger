@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1106AD87-CF4C-49A6-AF2A-FF4273484ECD}</ProjectGuid>
+    <ProjectGuid>{4DE67D47-1B98-4869-B4AD-4A16F75DCABF}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>Finger</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
@@ -30,8 +30,8 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -93,6 +93,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UndefinePreprocessorDefinitions>_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE</UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -189,23 +190,66 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="step.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="todo.h" />
+    <ClInclude Include="file.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Finger.cpp" />
-    <ClCompile Include="FingerDlg.cpp" />
+    <ClCompile Include="Finger.cpp">
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="FingerDlg.cpp">
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SDLCheck>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SDLCheck>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Finger.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
+    <None Include="res\Finger.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\5.bmp" />
+    <Image Include="res\5.bmp" />
     <Image Include="res\Finger.ico" />
-    <Image Include="res\toolbar1.bmp" />
+    <Image Include="temp\1.bmp" />
+    <Image Include="temp\11.bmp" />
+    <Image Include="temp\110.bmp" />
+    <Image Include="temp\110_verify.bmp" />
+    <Image Include="temp\11_verify.bmp" />
+    <Image Include="temp\12.bmp" />
+    <Image Include="temp\123.bmp" />
+    <Image Include="temp\123_verify.bmp" />
+    <Image Include="temp\12_verify.bmp" />
+    <Image Include="temp\153.bmp" />
+    <Image Include="temp\153_verify.bmp" />
+    <Image Include="temp\1_verify.bmp" />
+    <Image Include="temp\2.bmp" />
+    <Image Include="temp\2_verify.bmp" />
+    <Image Include="temp\52.bmp" />
+    <Image Include="temp\56.bmp" />
+    <Image Include="temp\56_verify.bmp" />
+    <Image Include="temp\6.bmp" />
+    <Image Include="temp\6_verify.bmp" />
+    <Image Include="temp\a.bmp" />
+    <Image Include="temp\bitmap2.bmp" />
+    <Image Include="temp\_verify.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

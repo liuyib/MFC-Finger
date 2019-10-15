@@ -7,7 +7,7 @@
 #include<iomanip>
 
 using namespace std;
-
+// vs ç¼–ç ä¸ºgbk
 void Sort(unsigned char*data, int dsize) {
 	unsigned char temp = 0;
 	for (int i = 0; i < dsize; i++) {
@@ -30,27 +30,27 @@ wchar_t*ToWideChar(char *str) {
 }
 
 int ReadBMPImgFilePara(char* fileName, int &width, int &height, int &depth) {
-	// ÔØÈëÍ¼Ïñ
+	// è½½å…¥å›¾åƒ
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(fileName));
 	if (FAILED(hResult) || (image.IsNull())) {
 		return -1;
 	}
-	// »ñµÃÍ¼Ïñ²ÎÊı
+	// è·å¾—å›¾åƒå‚æ•°
 	width = image.GetWidth();
 	height = image.GetHeight();
 	depth = image.GetBPP();
 	if (depth != 8) {
 		return -2;
 	}
-	// ÊÍ·Å±äÁ¿¿Õ¼ä
+	// é‡Šæ”¾å˜é‡ç©ºé—´
 	image.Destroy();
 
 	return 0;
 }
 
 int ReadBMPImgFileData(char *fileName, unsigned char *data) {
-	// ÔØÈëÍ¼Ïñ
+	// è½½å…¥å›¾åƒ
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(fileName));
 	if (FAILED(hResult) || image.IsNull()) {
@@ -63,7 +63,7 @@ int ReadBMPImgFileData(char *fileName, unsigned char *data) {
 		return -2;
 	}
 	memset(data, 0, width*height);
-	//¶ÁÈ¡Í¼ÏñÊı¾İ
+	//è¯»å–å›¾åƒæ•°æ®
 	int pitch = image.GetPitch();
 	unsigned char *pData1 = (unsigned char*)image.GetBits();
 	unsigned char* pData2 = data;
@@ -82,49 +82,49 @@ int ReadBMPImgFileData(char *fileName, unsigned char *data) {
 		}
 	}
 
-	// ÊÍ·Å¿Õ¼ä
+	// é‡Šæ”¾ç©ºé—´
 	image.Destroy();
 	return 0;
 }
-//int WriteBMPImgFile(char *dstFileName, unsigned char** pusImgData) {
-//	FILE *fp = fopen(dstFileName, "r+b");
-//	if (!fp) {
-//		return -1;
-//	}
-//
-//	int imgType, iWidth, iHeight;
-//	int iStartPos = 0;
-//	fseek(fp, 10L, SEEK_SET);
-//	fread((char*)(&iStartPos), 4, 1, fp);
-//	fseek(fp, 18L, SEEK_SET);
-//	fread((char*)(&iWidth), 4, 1, fp);
-//	fread((char*)(&iHeight), 4, 1, fp);
-//	unsigned short temp;
-//	fseek(fp, 28L, SEEK_SET);
-//	fread((char*)(&temp), 2, 1, fp);
-//	imgType = temp;
-//	if (imgType != 8) {
-//		return -2;
-//	}
-//	unsigned char* usImgData = *pusImgData;
-//	int iWidthInFile = 0;
-//	if (iWidth % 4 > 0) {
-//		iWidthInFile = iWidth - iWidth % 4 + 4;
-//	}
-//	else {
-//		iWidthInFile = iWidth;
-//	}
-//	for (int i = iHeight - 1; i >= 0; i--) {
-//		fseek(fp, iStartPos, SEEK_SET);
-//		fwrite((usImgData + i * iWidth), 1, iWidth, fp);
-//		iStartPos += iWidthInFile;
-//	}
-//	fclose(fp);
-//	return 0;
-//}
+int WriteBMPImgFile(char *dstFileName, unsigned char** pusImgData) {
+	FILE *fp = fopen(dstFileName, "r+b");
+	if (!fp) {
+		return -1;
+	}
+
+	int imgType, iWidth, iHeight;
+	int iStartPos = 0;
+	fseek(fp, 10L, SEEK_SET);
+	fread((char*)(&iStartPos), 4, 1, fp);
+	fseek(fp, 18L, SEEK_SET);
+	fread((char*)(&iWidth), 4, 1, fp);
+	fread((char*)(&iHeight), 4, 1, fp);
+	unsigned short temp;
+	fseek(fp, 28L, SEEK_SET);
+	fread((char*)(&temp), 2, 1, fp);
+	imgType = temp;
+	if (imgType != 8) {
+		return -2;
+	}
+	unsigned char* usImgData = *pusImgData;
+	int iWidthInFile = 0;
+	if (iWidth % 4 > 0) {
+		iWidthInFile = iWidth - iWidth % 4 + 4;
+	}
+	else {
+		iWidthInFile = iWidth;
+	}
+	for (int i = iHeight - 1; i >= 0; i--) {
+		fseek(fp, iStartPos, SEEK_SET);
+		fwrite((usImgData + i * iWidth), 1, iWidth, fp);
+		iStartPos += iWidthInFile;
+	}
+	fclose(fp);
+	return 0;
+}
 int SaveDataToImageFile(char* srcFile, char* dstFile, unsigned char* data) {
 	CopyFile(ToWideChar(srcFile), ToWideChar(dstFile), false);
-	//WriteBMPImgFile(dstFile, &data);
+	WriteBMPImgFile(dstFile, &data);
 	return 0;
 }
 int SaveDataToImageFile(char* srcFile, char* dstFile, float* data, float scale) {
@@ -136,7 +136,7 @@ int SaveDataToImageFile(char* srcFile, char* dstFile, float* data, float scale) 
 		tmpData[i] = unsigned char((scale* data[i]));
 	}
 
-	//WriteBMPImgFile(dstFile, &tmpData);
+	WriteBMPImgFile(dstFile, &tmpData);
 	delete[] tmpData;
 	return 0;
 }
@@ -145,7 +145,7 @@ int SaveDataToTextFile(char* dstFile, unsigned char*data, int width, int height)
 	if (!fout) {
 		return -1;
 	}
-	// °´Ö¸¶¨¸ñÊ½ÏòÎÄ¼şĞ´ÈëÊı¾İ
+	// æŒ‰æŒ‡å®šæ ¼å¼å‘æ–‡ä»¶å†™å…¥æ•°æ®
 	int space = 5;
 	for (int i = 0; i < height*width; i++) {
 		fout << setw(space) << int(data[i]);
@@ -174,18 +174,18 @@ int SaveDataToTextFile(char* dstFile, float *data, int width, int height) {
 	return 0;
 }
 int ReadDatafromTextFile(char* srcFile, unsigned char* data, int iWidth, int iHeight) {
-	// ´ò¿ªÔ´ÎÄ¼ş
+	// æ‰“å¼€æºæ–‡ä»¶
 	ifstream fin(srcFile, ios::in);
 	if (!fin) {
 		return -1;
 	}
-	// ¶ÁÈ¡Êı¾İ
+	// è¯»å–æ•°æ®
 	int d = 0;
 	for (int i = 0; i < iHeight*iWidth; i++) {
 		fin >> d;
 		data[i] = (unsigned char)d;
 	}
-	// ¹Ø±ÕÎÄ¼ş
+	// å…³é—­æ–‡ä»¶
 	fin.close();
 	return 0;
 }
@@ -204,17 +204,17 @@ int ReadDatafromTextFile(char* srcFile, float* data, int iWidth, int iHeight) {
 }
 
 
-int ShowImageInCtrl(CStatic &picCtrl, char *filename) {
+int ShowImageInCtrl(CStatic &picCtrl,char *filename) {
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(filename));
-	int width = image.GetWidth();
+	int width = image.GetWidth();	
 	int height = image.GetHeight();
 
 	CRect rect;
 	picCtrl.GetClientRect(&rect);
 	CDC *pDc = picCtrl.GetWindowDC();
-	SetStretchBltMode(pDc->m_hDC, STRETCH_HALFTONE);
-	image.StretchBlt(pDc->m_hAttribDC, rect, SRCCOPY);
+	SetStretchBltMode(pDc->m_hDC,STRETCH_HALFTONE);
+	image.StretchBlt(pDc->m_hAttribDC,rect,SRCCOPY);
 	picCtrl.Invalidate(false);
 	image.Destroy();
 	picCtrl.ReleaseDC(pDc);

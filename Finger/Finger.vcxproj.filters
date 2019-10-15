@@ -30,6 +30,12 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="todo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="step.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -51,10 +57,85 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Finger.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="res\Finger.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="res\toolbar1.bmp">
+    <Image Include="temp\a.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\153_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\1_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\2_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\6.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\6_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\11.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\11_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\12.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\12_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\52.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\56.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\56_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\110.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\110_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\123.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\123_verify.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\153.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="temp\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\..\5.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\5.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

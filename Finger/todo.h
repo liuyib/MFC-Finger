@@ -10,7 +10,7 @@ using namespace std;
 
 struct NEIGHBOR {
 	int x;
-	int y;
+	int y; 
 	int type;
 	float Theta;
 	float Theta2Ridge;
@@ -26,30 +26,30 @@ struct MINUTIAE {
 	NEIGHBOR *neibors;
 };
 
-//int ReadMinutiae(char* filename, MINUTIAE** minutiae) {
-//	FILE * fp = fopen(filename, "rb");
-//	if (!fp) {
-//		return -1;
-//	}
-//	const static int TemplateFileFlag = 0x3571027f;
-//	int flag;
-//	fread(&flag, sizeof(int), 1, fp);
-//	if (flag != TemplateFileFlag) {
-//		return -2;
-//	}
-//	int account;
-//	fread(&account, sizeof(int), 1, fp);
-//	*minutiae = new MINUTIAE[account];
-//	if (*minutiae == NULL) {
-//		return -3;
-//	}
-//	for (int i = 0; i < account; i++) {
-//		fread(&((*minutiae)[i]), sizeof(MINUTIAE), 1, fp);
-//	}
-//
-//	fclose(fp);
-//	return account;
-//}
+int ReadMinutiae(char* filename, MINUTIAE** minutiae) {
+	FILE * fp = fopen(filename, "rb");
+	if (!fp) {
+		return -1;
+	}
+	const static int TemplateFileFlag = 0x3571027f;
+	int flag;
+	fread(&flag, sizeof(int), 1, fp);
+	if (flag != TemplateFileFlag) {
+		return -2;
+	}
+	int account;
+	fread(&account, sizeof(int), 1, fp);
+	*minutiae = new MINUTIAE[account];
+	if (*minutiae == NULL) {
+		return -3;
+	}
+	for (int i = 0; i < account; i++) {
+		fread(&((*minutiae)[i]), sizeof(MINUTIAE), 1, fp);
+	}
+
+	fclose(fp);
+	return account;
+}
 
 int MidFilter(unsigned char *ucImg, unsigned char *ucDstImg, int iWidth, int iHeight) {
 	memset(ucDstImg, 0, iWidth*iHeight);
@@ -130,12 +130,12 @@ int MidFilter(unsigned char *ucImg, unsigned char *ucDstImg, int iWidth, int iHe
 	Sort(x, 4);
 
 	*(ucDstImg + (iHeight - 0)*iWidth - 1) = x[2];
-
+	 
 	return 0;
 }
 
 
-int HistoNormalize(unsigned char* ucImg, unsigned char* ucNormImg, int iWidth, int iHeight) {
+int HistoNormalize(unsigned char* ucImg,unsigned char* ucNormImg, int iWidth,int iHeight) {
 	unsigned int Histogram[256];
 
 	memset(Histogram, 0, 256 * sizeof(int));
@@ -148,10 +148,10 @@ int HistoNormalize(unsigned char* ucImg, unsigned char* ucNormImg, int iWidth, i
 	for (int i = 1; i < 255; i++) {
 		dMean += i * Histogram[i];
 	}
-	dMean = int(dMean / (iWidth*iHeight));
+	dMean = int(dMean/(iWidth*iHeight));
 	double dSigma = 0;
 	for (int i = 0; i < 255; i++) {
-		dSigma += Histogram[i] * (i - dMean)*(i - dMean);
+		dSigma += Histogram[i] * (i - dMean)*(i-dMean);
 	}
 	dSigma /= (iWidth*iHeight);
 	dSigma = sqrt(dSigma);
@@ -159,9 +159,9 @@ int HistoNormalize(unsigned char* ucImg, unsigned char* ucNormImg, int iWidth, i
 	double dMean0 = 128, dSigma0 = 128;
 	double dCoeff = dSigma0 / dSigma;
 	for (int i = 0; i < iHeight; i++) {
-		for (int j = 0; j < iWidth; j++) {
-			double dVal = ucImg[i*iWidth + j];
-			dVal = dMean0 + dCoeff * (dVal - dMean0);
+		for(int j=0;j<iWidth;j++){
+			double dVal = ucImg[i*iWidth + j]; 
+			dVal = dMean0 + dCoeff * (dVal-dMean0);
 			if (dVal < 0) {
 				dVal = 0;
 			}
@@ -175,7 +175,7 @@ int HistoNormalize(unsigned char* ucImg, unsigned char* ucNormImg, int iWidth, i
 }
 
 
-int ImgDirection(unsigned char* ucImg, float* fDirc, int iWidth, int iHeight) {
+int ImgDirection(unsigned char* ucImg,float* fDirc,int iWidth,int iHeight) {
 	const int SEMISIZ = 7;
 	int dx[SEMISIZ * 2 + 1][SEMISIZ * 2 + 1];
 	int dy[SEMISIZ * 2 + 1][SEMISIZ * 2 + 1];
@@ -192,7 +192,7 @@ int ImgDirection(unsigned char* ucImg, float* fDirc, int iWidth, int iHeight) {
 					dy[i][j] = int(ucImg[index1] - ucImg[index3]);
 				}
 			}
-			fx = 0.0;
+			fx = 0.0; 
 			fy = 0.0;
 			for (int j = 0; j < SEMISIZ * 2 + 1; j++) {
 				for (int i = 0; i < SEMISIZ * 2 + 1; i++) {
@@ -200,14 +200,14 @@ int ImgDirection(unsigned char* ucImg, float* fDirc, int iWidth, int iHeight) {
 					fy += (dx[i][j] * dx[i][j] - dy[i][j] * dy[i][j]);
 				}
 			}
-			fDirc[y*iWidth + x] = atan2(fx, fy);
+			fDirc[y*iWidth + x] = atan2(fx,fy);
 		}
 	}
 	return 0;
 }
 
 
-int DircLowPass(float *fDirc, float* fFitDirc, int iWidth, int iHeight) {
+int DircLowPass(float *fDirc,float* fFitDirc,int iWidth,int iHeight) {
 	const int DIR_FILTER_SIZE = 2;
 	int blocksize = 2 * DIR_FILTER_SIZE + 1;
 	int imgsize = iWidth * iHeight;
@@ -216,7 +216,7 @@ int DircLowPass(float *fDirc, float* fFitDirc, int iWidth, int iHeight) {
 	float *phiy = new float[imgsize];
 	float *phi2x = new float[imgsize];
 	float *phi2y = new float[imgsize];
-	memset(fFitDirc, 0, sizeof(float)*iWidth*iHeight);
+	memset(fFitDirc,0,sizeof(float)*iWidth*iHeight);
 	float tempSum = 0.0;
 	for (int y = 0; y < blocksize; y++) {
 		for (int x = 0; x < blocksize; x++) {
@@ -229,7 +229,7 @@ int DircLowPass(float *fDirc, float* fFitDirc, int iWidth, int iHeight) {
 			filter[y*blocksize + x] /= tempSum;
 		}
 	}
-	for (int y = 0; y < iHeight; y++) {
+	for(int y=0;y<iHeight;y++){
 		for (int x = 0; x < iWidth; x++) {
 			phix[y*iWidth + x] = cos(fDirc[y*iWidth + x]);
 			phiy[y*iWidth + x] = sin(fDirc[y*iWidth + x]);
@@ -259,7 +259,7 @@ int DircLowPass(float *fDirc, float* fFitDirc, int iWidth, int iHeight) {
 	for (int y = 0; y < iHeight - blocksize; y++) {
 		for (int x = 0; x < iWidth - blocksize; x++) {
 			val = x + y * iWidth;
-			fFitDirc[val] = atan2(phi2y[val], phi2x[val])*0.5;
+			fFitDirc[val] = atan2(phi2y[val],phi2x[val])*0.5;
 		}
 	}
 	delete[] phi2y;
@@ -271,7 +271,7 @@ int DircLowPass(float *fDirc, float* fFitDirc, int iWidth, int iHeight) {
 }
 
 
-int Frequency(unsigned char* ucImg, float *fDirection, float* fFrequency, int iWidth, int iHeight) {
+int Frequency(unsigned char* ucImg,float *fDirection,float* fFrequency,int iWidth,int iHeight){
 	const int SIZE_L = 32;
 	const int SIZE_W = 16;
 	const int SIZE_L2 = 16;
@@ -322,7 +322,7 @@ int Frequency(unsigned char* ucImg, float *fDirection, float* fFrequency, int iW
 			}
 			maxPeak = minPeak = Xsig[0];
 			for (k = 0; k < SIZE_L; k++) {
-				if (minPeak > Xsig[k]) {
+				if(minPeak>Xsig[k]){
 					minPeak = Xsig[k];
 				}
 				if (maxPeak < Xsig[k]) {
@@ -331,7 +331,7 @@ int Frequency(unsigned char* ucImg, float *fDirection, float* fFrequency, int iW
 			}
 			peak_cnt = 0;
 			if ((maxPeak - minPeak) > 64) {
-				for (k = 0; k < SIZE_L; k++) {
+				for(k=0;k<SIZE_L;k++){
 					if ((Xsig[k - 1] < Xsig[k]) && (Xsig[k] >= Xsig[k + 1])) {
 						peak_pos[peak_cnt++] = k;
 					}
@@ -361,7 +361,7 @@ int Frequency(unsigned char* ucImg, float *fDirection, float* fFrequency, int iW
 					peak_freq += frequency1[(x + u) + (y + v)*iWidth];
 				}
 			}
-			fFrequency[k] = peak_freq / 25;
+			fFrequency[k] = peak_freq/25;
 		}
 	}
 
@@ -370,19 +370,19 @@ int Frequency(unsigned char* ucImg, float *fDirection, float* fFrequency, int iW
 }
 
 
-int GetMask(unsigned char* ucImg, float *fDirection, float *fFrequency, unsigned char *ucMask, int iWidth, int iHeight) {
+int GetMask(unsigned char* ucImg,float *fDirection,float *fFrequency,unsigned char *ucMask,int iWidth,int iHeight) {
 	float freqMin = 1.0 / 25.0;
 	float freqMax = 1.0 / 3.0;
 	int x, y, k;
 	int pos, posout;
-	memset(ucMask, 0, iWidth*iHeight);
+	memset(ucMask,0,iWidth*iHeight);
 	for (y = 0; y < iHeight; y++) {
 		for (x = 0; x < iWidth; x++) {
 			pos = x + y * iWidth;
 			posout = x + y * iWidth;
 			ucMask[posout] = 0;
 			if (fFrequency[pos] >= freqMin && fFrequency[pos] <= freqMax) {
-				ucMask[posout] = 255;
+				ucMask[posout] = 255; 
 			}
 		}
 	}
@@ -392,8 +392,8 @@ int GetMask(unsigned char* ucImg, float *fDirection, float *fFrequency, unsigned
 				if (ucMask[x + y * iWidth] == 0xFF) {
 					ucMask[x - 1 + y * iWidth] |= 0x80;
 					ucMask[x + 1 + y * iWidth] |= 0x80;
-					ucMask[x + (y - 1) * iWidth] |= 0x80;
-					ucMask[x + (y + 1) * iWidth] |= 0x80;
+					ucMask[x + (y-1) * iWidth] |= 0x80;
+					ucMask[x + (y+1) * iWidth] |= 0x80;
 				}
 			}
 		}
@@ -436,14 +436,14 @@ int GaborEnhance(unsigned char* ucImg, float* fDirection, float* fFrequency, uns
 	float x2, y2;
 	float dx2 = 1.0 / (4.0*4.0);
 	float dy2 = 1.0 / (4.0*4.0);
-	memset(ucImgEnhanced, 0, iWidth*iHeight);
+	memset(ucImgEnhanced,0,iWidth*iHeight);
 	for (j = wg2; j < iHeight - wg2; j++) {
 		for (i = wg2; i < iWidth - wg2; i++) {
 			if (ucMask[i + j * iWidth] == 0) {
 				continue;
 			}
-			g = fDirection[i + j * iWidth];
-			f = fFrequency[i + j * iWidth];
+			g = fDirection[i+j*iWidth];
+			f = fFrequency[i+j*iWidth];
 			g += PI / 2;
 			sum = 0.0;
 			for (v = -wg2; v <= wg2; v++) {
@@ -466,7 +466,7 @@ int GaborEnhance(unsigned char* ucImg, float* fDirection, float* fFrequency, uns
 }
 
 
-int BinaryImg(unsigned char* ucImage, unsigned char* ucBinImage, int iWidth, int iHeight, unsigned char uThreshold) {
+int BinaryImg(unsigned char* ucImage,unsigned char* ucBinImage,int iWidth,int iHeight,unsigned char uThreshold) {
 	unsigned char *pStart = ucImage, *pEnd = ucImage + iWidth * iHeight;
 	unsigned char *pDest = ucBinImage;
 	while (pStart < pEnd) {
@@ -478,12 +478,12 @@ int BinaryImg(unsigned char* ucImage, unsigned char* ucBinImage, int iWidth, int
 }
 
 
-int BinaryToGray(unsigned char *ucBinImg, unsigned char *ucGrayImg, int iWidth, int iHeight) {
+int BinaryToGray(unsigned char *ucBinImg,unsigned char *ucGrayImg,int iWidth,int iHeight) {
 	unsigned char *pStart = ucBinImg, *pEnd = ucBinImg + iWidth * iHeight;
 	unsigned char *pDest = ucGrayImg;
 
-	while (pStart < pEnd) {
-		*pDest = (*pStart) > 0 ? 255 : 0;
+	while (pStart<pEnd) {
+		*pDest = (*pStart) > 0 ? 255 : 0; 
 		pStart++;
 		pDest++;
 	}
@@ -491,7 +491,7 @@ int BinaryToGray(unsigned char *ucBinImg, unsigned char *ucGrayImg, int iWidth, 
 }
 
 
-int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidth, int iHeight, int iIterativeLimit) {
+int Thinning(unsigned char *ucBinedImg,unsigned char *ucThinnedImage,int iWidth,int iHeight,int iIterativeLimit) {
 	unsigned char x1, x2, x3, x4, x5, x6, x7, x8, xp;
 	unsigned char g1, g2, g3, g4;
 	unsigned char b1, b2, b3, b4;
@@ -499,7 +499,7 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 	unsigned char *pUp, *pDown, *pImg;
 	int iDeletePoints = 0;
 
-	memcpy(ucThinnedImage, ucBinedImg, iWidth*iHeight);
+	memcpy(ucThinnedImage,ucBinedImg,iWidth*iHeight);
 	for (int it = 0; it < iIterativeLimit; it++) {
 		iDeletePoints = 0;
 		for (int i = 1; i < iHeight - 1; i++) {
@@ -520,8 +520,8 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 				xp = *pImg;
 				x3 = *pDown;
 				x8 = *(pUp + 1);
-				x1 = *(pImg + 1);
-				x2 = *(pDown + 1);
+				x1 = *(pImg+1);
+				x2 = *(pDown+1);
 
 
 				b1 = !x1 && (x2 == 1 || x3 == 1);
@@ -535,7 +535,7 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 				np1 += x3 || x4;
 				np1 += x5 || x6;
 				np1 += x7 || x8;
-				np2 = x2 || x3;
+				np2  = x2 || x3;
 				np2 += x4 || x5;
 				np2 += x6 || x7;
 				np2 += x8 || x1;
@@ -551,11 +551,11 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 				}
 			}
 		}
-		memcpy(ucBinedImg, ucThinnedImage, iWidth*iHeight);
-		for (int i = 1; i < iHeight - 1; i++) {
+		memcpy(ucBinedImg,ucThinnedImage,iWidth*iHeight);
+		for (int i = 1; i < iHeight - 1;i++) {
 			pUp = ucBinedImg + (i - 1)*iWidth;
 			pImg = ucBinedImg + i * iWidth;
-			pDown = ucBinedImg + (i + 1) * iWidth;
+			pDown = ucBinedImg + (i+1) * iWidth;
 			for (int j = 1; j < iWidth - 1; j++) {
 				pUp++;
 				pImg++;
@@ -599,13 +599,13 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 				g4 = (x5 && (x6 || x7 || !x4)) == 0;
 
 				if (g1&&g2&&g4) {
-					ucThinnedImage[iWidth*i + j] = 0;
+					ucThinnedImage[iWidth*i+j] = 0;
 					++iDeletePoints;
 				}
-			}
+ 			}
 		}
 
-		memcpy(ucBinedImg, ucThinnedImage, iWidth*iHeight);
+		memcpy(ucBinedImg,ucThinnedImage,iWidth*iHeight);
 
 		if (iDeletePoints == 0) {
 			break;
@@ -632,7 +632,7 @@ int Thinning(unsigned char *ucBinedImg, unsigned char *ucThinnedImage, int iWidt
 }
 
 
-int Extract(unsigned char *ucThinImg, unsigned char *ucMinuImg, int iWidth, int iHeight) {
+int Extract(unsigned char *ucThinImg,unsigned char *ucMinuImg,int iWidth,int iHeight){
 	unsigned char *pDest = ucMinuImg;
 	unsigned char *pUp, *pDown, *pImg;
 	unsigned char x1, x2, x3, x4, x5, x6, x7, x8;
@@ -675,16 +675,16 @@ int Extract(unsigned char *ucThinImg, unsigned char *ucMinuImg, int iWidth, int 
 }
 
 
-int CutEdge(MINUTIAE* minutiaes, int count, unsigned char*ucImg, int iWidth, int iHeight) {
+int CutEdge(MINUTIAE* minutiaes,int count,unsigned char*ucImg,int iWidth,int iHeight) {
 	int minuCount = count;
 	int x, y, type;
 	bool del;
 	int *pFlag = new int[minuCount];
-	memset(pFlag, 0, sizeof(int)*minuCount);
+	memset(pFlag,0,sizeof(int)*minuCount);
 	for (int i = 0; i < minuCount; i++) {
 		y = minutiaes[i].y - 1;
 		x = minutiaes[i].x - 1;
-		type = minutiaes[i].type;
+		type = minutiaes[i].type ;
 		del = true;
 		if (x < iWidth / 2) {
 			if (abs(iWidth / 2 - x) > abs(iHeight / 2 - y)) {
@@ -750,7 +750,7 @@ int CutEdge(MINUTIAE* minutiaes, int count, unsigned char*ucImg, int iWidth, int
 	int newCount = 0;
 	for (int i = 0; i < minuCount; i++) {
 		if (pFlag[i] == 0) {
-			memcpy(&minutiaes[newCount], &minutiaes[i], sizeof(MINUTIAE));
+			memcpy(&minutiaes[newCount],&minutiaes[i],sizeof(MINUTIAE));
 			newCount++;
 		}
 	}
@@ -760,10 +760,10 @@ int CutEdge(MINUTIAE* minutiaes, int count, unsigned char*ucImg, int iWidth, int
 }
 
 
-int MinuFilter(unsigned char *minuData, unsigned char *thinData, MINUTIAE *minutiaes, int &minuCount, int iWidth, int iHeight) {
+int MinuFilter(unsigned char *minuData,unsigned char *thinData,MINUTIAE *minutiaes,int &minuCount,int iWidth,int iHeight) {
 	float *dir = new float[iWidth*iHeight];
-	memset(dir, 0, iWidth*iHeight * sizeof(float));
-	ImgDirection(thinData, dir, iWidth, iHeight);
+	memset(dir,0,iWidth*iHeight*sizeof(float));
+	ImgDirection(thinData,dir,iWidth,iHeight);
 	unsigned char* pImg;
 	unsigned char val;
 	int temp = 0;
@@ -772,19 +772,19 @@ int MinuFilter(unsigned char *minuData, unsigned char *thinData, MINUTIAE *minut
 		for (int j = 1; j < iWidth - 1; j++) {
 			++pImg;
 			val = *pImg;
-			if (val > 0) {
+			if(val>0){
 				minutiaes[temp].x = j + 1;
 				minutiaes[temp].y = i + 1;
-				minutiaes[temp].theta = dir[i*iWidth + j];
+				minutiaes[temp].theta = dir[i*iWidth+j];
 				minutiaes[temp].type = int(val);
 				++temp;
 			}
 		}
 	}
-	delete[] dir;
-	minuCount = CutEdge(minutiaes, minuCount, thinData, iWidth, iHeight);
+	delete[] dir; 
+	minuCount = CutEdge(minutiaes,minuCount,thinData,iWidth,iHeight);
 	int *pFlag = new int[minuCount];
-	memset(pFlag, 0, sizeof(int)*minuCount);
+	memset(pFlag,0,sizeof(int)*minuCount);
 	int x1, x2, y1, y2, type1, type2;
 	for (int i = 0; i < minuCount; i++) {
 		x1 = minutiaes[i].x;
@@ -798,7 +798,7 @@ int MinuFilter(unsigned char *minuData, unsigned char *thinData, MINUTIAE *minut
 			y2 = minutiaes[j].y;
 			type2 = minutiaes[j].type;
 
-			int r = (int)sqrt(float((y1 - y2)*(y1 - y2) + (x1 - x2)*(x1 - x2)));
+			int r = (int)sqrt(float((y1-y2)*(y1-y2)+(x1-x2)*(x1-x2)));
 
 			if (r <= 4) {
 				if (type1 == type2) {
@@ -822,7 +822,7 @@ int MinuFilter(unsigned char *minuData, unsigned char *thinData, MINUTIAE *minut
 	int newCount = 0;
 	for (int i = 0; i < minuCount; i++) {
 		if (pFlag[i] == 0) {
-			memcpy(&minutiaes[newCount], &minutiaes[i], sizeof(MINUTIAE));
+			memcpy(&minutiaes[newCount],&minutiaes[i],sizeof(MINUTIAE));
 			newCount++;
 		}
 	}
@@ -831,24 +831,24 @@ int MinuFilter(unsigned char *minuData, unsigned char *thinData, MINUTIAE *minut
 	return 0;
 }
 
-//
-//int SaveMinutiae(MINUTIAE *minutiaes, int count, char *fileName) {
-//	FILE *fp = fopen(fileName, "wb");
-//	if (!fp) {
-//		return -1;
-//	}
-//	const static int TemplateFileFlag = 0x3571027f;
-//	fwrite(&TemplateFileFlag, sizeof(int), 1, fp);
-//	fwrite(&count, sizeof(int), 1, fp);
-//	for (int i = 0; i < count; i++) {
-//		fwrite(&(minutiaes[i]), sizeof(MINUTIAE), 1, fp);
-//	}
-//	fclose(fp);
-//	return 0;
-//}
+
+int SaveMinutiae(MINUTIAE *minutiaes,int count,char *fileName) {
+	FILE *fp = fopen(fileName,"wb");
+	if (!fp) {
+		return -1;
+	}
+	const static int TemplateFileFlag = 0x3571027f;
+	fwrite(&TemplateFileFlag, sizeof(int), 1, fp);
+	fwrite(&count,sizeof(int),1,fp);
+	for (int i = 0; i < count; i++) {
+		fwrite(&(minutiaes[i]),sizeof(MINUTIAE),1,fp);
+	}
+	fclose(fp);
+	return 0;
+}
 
 
-float Angle2Points(int x1, int y1, int x2, int y2) {
+float Angle2Points(int x1,int y1,int x2,int y2) {
 	const float PI = 3.141592654;
 	float diffY, diffX;
 	float theta = 0.0;
@@ -857,10 +857,10 @@ float Angle2Points(int x1, int y1, int x2, int y2) {
 	diffX = x2 - x1;
 
 	if (diffY < 0 && diffX>0) {
-		theta = atan2(-1 * diffY, diffX);
+		theta = atan2(-1*diffY,diffX);
 	}
 	else if (diffY < 0 && diffX < 0) {
-		theta = PI - atan2(-1 * diffY, -1 * diffX);
+		theta = PI -  atan2(-1 * diffY, -1*diffX);
 	}
 	else if (diffY > 0 && diffX < 0) {
 		theta = atan2(diffY, -1 * diffX);
@@ -878,7 +878,7 @@ float Angle2Points(int x1, int y1, int x2, int y2) {
 }
 
 
-int BuildNabors(MINUTIAE *minutiae, int minuCount) {
+int BuildNabors(MINUTIAE *minutiae,int minuCount) {
 	const int MAX_NEIGHBOR_EACH = 10;
 	int x1, x2, y1, y2;
 	int *pFlag = new int[minuCount];
@@ -886,24 +886,24 @@ int BuildNabors(MINUTIAE *minutiae, int minuCount) {
 		x1 = minutiae[i].x;
 		y1 = minutiae[i].y;
 
-		memset(pFlag, 0, sizeof(int)*minuCount);
+		memset(pFlag,0,sizeof(int)*minuCount);
 		pFlag[i] = 1;
 		minutiae[i].neibors = new NEIGHBOR[MAX_NEIGHBOR_EACH];
 		if (minutiae[i].neibors == NULL) {
 			return -1;
 		}
-		memset(minutiae[i].neibors, 0, sizeof(NEIGHBOR)*MAX_NEIGHBOR_EACH);
+		memset(minutiae[i].neibors,0,sizeof(NEIGHBOR)*MAX_NEIGHBOR_EACH);
 
 		for (int neighborNo = 0; neighborNo < MAX_NEIGHBOR_EACH; neighborNo++) {
 			int minDistance = 1000;
-			int minNo = 0;
+			int minNo = 0; 
 			for (int j = 0; j < minuCount; j++) {
 				if (pFlag[j] == 1) {
 					continue;
 				}
 				x2 = minutiae[j].x;
 				y2 = minutiae[j].y;
-				int r = (int)sqrt(float((y1 - y2)*(y1 - y2) + (x1 - x2)*(x1 - x2)));
+				int r = (int)sqrt(float((y1-y2)*(y1-y2)+(x1-x2)*(x1-x2)));
 
 				if (r < minDistance) {
 					minNo = j;
@@ -915,12 +915,12 @@ int BuildNabors(MINUTIAE *minutiae, int minuCount) {
 			minutiae[i].neibors[neighborNo].x = minutiae[minNo].x;
 			minutiae[i].neibors[neighborNo].y = minutiae[minNo].y;
 			minutiae[i].neibors[neighborNo].type = minutiae[minNo].type;
-			minutiae[i].neibors[neighborNo].Theta = Angle2Points(minutiae[minNo].x, minutiae[minNo].y, x1, y1);
+			minutiae[i].neibors[neighborNo].Theta = Angle2Points(minutiae[minNo].x,minutiae[minNo].y,x1,y1);
 
 			minutiae[i].neibors[neighborNo].Theta2Ridge = minutiae[minNo].theta - minutiae[i].theta;
 
-			minutiae[i].neibors[neighborNo].Theta2ThisNibor = minutiae[minNo].theta;
-
+			minutiae[i].neibors[neighborNo].Theta2ThisNibor = minutiae[minNo].theta; 
+			
 			minutiae[i].neibors[neighborNo].distance = minDistance;
 
 		}
@@ -938,7 +938,7 @@ float MinuSimilarity(int iWidth, int iHeight, MINUTIAE* minutiae1, int count1, M
 
 	int similarPair[MAX_SIMILAR_PAIR][2];
 
-	memset(similarPair, 0, 100 * 2 * sizeof(int));
+	memset(similarPair,0,100*2*sizeof(int));
 
 	MINUTIAE *baseMinutiae;
 	MINUTIAE *refMinutiae;
@@ -980,7 +980,7 @@ float MinuSimilarity(int iWidth, int iHeight, MINUTIAE* minutiae1, int count1, M
 					if (baseNeighbors[m].type != refNeighbors[n].type) {
 						continue;
 					}
-					int dist = abs(int(baseNeighbors[m].distance - refNeighbors[n].distance));
+					int dist = abs(int(baseNeighbors[m].distance-refNeighbors[n].distance));
 					float theta1 = abs(float((baseNeighbors[m].Theta - baseTheta) - (refNeighbors[n].Theta - refTheta)));
 					float theta2 = abs(float(baseNeighbors[m].Theta2Ridge - refNeighbors[n].Theta2Ridge));
 					float theta3 = abs(float((baseNeighbors[m].Theta - baseNeighbors[m].Theta2ThisNibor) - (refNeighbors[n].Theta - refNeighbors[n].Theta2ThisNibor)));
@@ -998,7 +998,7 @@ float MinuSimilarity(int iWidth, int iHeight, MINUTIAE* minutiae1, int count1, M
 		}
 	}
 
-	float similarity = similarMinutiae / 8.0f;
+	float similarity = similarMinutiae/8.0f;
 	similarity = similarMinutiae < 2 ? 0.0f : similarity;
 	similarity = similarMinutiae > 8 ? 1.0f : similarity;
 	return similarity;
