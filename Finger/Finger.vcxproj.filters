@@ -7,12 +7,15 @@
     </Filter>
     <Filter Include="头文件">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Finger.h">
@@ -30,13 +33,16 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="todo.h">
+    <ClInclude Include="CZKFPEngX.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="file.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="step.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="todo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,6 +56,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CZKFPEngX.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Finger.rc">
@@ -60,79 +69,10 @@
     <None Include="res\Finger.rc2">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="cpp.hint" />
+    <None Include="Finger.aps" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Finger.ico">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\a.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\153_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\1.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\1_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\2.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\2_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\6.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\6_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\11.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\11_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\12.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\12_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\52.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\56.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\56_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\110.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\110_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\123.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\123_verify.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\153.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="temp\bitmap2.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="..\..\..\5.bmp">
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\5.bmp">

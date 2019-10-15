@@ -39,17 +39,17 @@ int main()
 		//  数据接收
 		char ip[256] ;
 		recv(NEW,ip,256,0); 
-		cout << ip<< ": 连接成功..." << endl;
-		char questionId[256] ;
-		ret = recv(NEW,questionId,256,0);
-		cout << questionId <<endl ;
-		
+		cout << ip ;
 		// 时间
 		time_t rawtime; 
 		struct tm * timeinfo; 
 		time ( &rawtime ); 
 		timeinfo = localtime ( &rawtime ); 
-		printf ("提交时间: %s", asctime(timeinfo) ); 
+		printf ("  %s\n\n", asctime(timeinfo) ); 
+		char questionId[256] ;
+		ret = recv(NEW,questionId,256,0);
+		cout << "\t\t\t" <<questionId <<endl<<endl ;
+		
 
 		//  清理工作 
 		closesocket(listening);
