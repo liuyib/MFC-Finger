@@ -201,6 +201,10 @@ int ImgDirection(unsigned char* ucImg,float* fDirc,int iWidth,int iHeight) {
 				}
 			}
 			fDirc[y*iWidth + x] = atan2(fx,fy);
+			double tmp = atan2(fx, fy);
+			cout << "y:\t" << y * iWidth << endl;
+			cout << "x:\t" << x << endl;
+			cout << "values:\t" << atan2(fx, fy) << endl;
 		}
 	}
 	return 0;

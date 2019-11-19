@@ -424,13 +424,13 @@ int Step12_Match(char *beginname,char *mdlfile,char *info) {
 	CString name(mdlfile);
 	CString ok("YES ");
 	CString no("NO ");
-	const float SIMILAR_THRED = 0.1;
+	const float SIMILAR_THRED = 0.5;
 	if (similar < SIMILAR_THRED) {
 		/*char fasong[80];
 		strcpy(fasong, "Æ¥ÅäÊ§°Ü:");
 		strcat(fasong, mdlfile);
 		tcp(fasong);*/
-		MessageBox(NULL, no + name, _T("No"), MB_OK);
+		//MessageBox(NULL, no + name, _T("No"), MB_OK);
 		return 0;
 	}
 	/*char fasong[80];
