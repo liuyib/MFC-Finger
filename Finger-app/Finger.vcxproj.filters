@@ -104,9 +104,6 @@
     <Image Include="res\bitmap2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="C:\Users\小circle\Desktop\login_bg.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="C:\Users\小circle\Desktop\welcome.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -116,19 +113,16 @@
     <Image Include="resources\bg.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="resources\login_bg.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resources\bitmap3.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\login_bg.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\zsh.bmp">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\Alogin_bg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\login_bg.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

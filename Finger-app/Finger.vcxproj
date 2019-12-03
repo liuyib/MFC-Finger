@@ -218,10 +218,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Alogin_bg.bmp" />
-    <Image Include="..\login_bg.bmp" />
     <Image Include="..\zsh.bmp" />
     <Image Include="C:\Users\小circle\Desktop\bg.bmp" />
-    <Image Include="C:\Users\小circle\Desktop\login_bg.bmp" />
     <Image Include="C:\Users\小circle\Desktop\welcome.bmp" />
     <Image Include="resources\bg.bmp" />
     <Image Include="resources\bitmap3.bmp" />
