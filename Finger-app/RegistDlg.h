@@ -41,6 +41,7 @@ public:
 	CStatic r_picimg_3;
 	CZkfpengx1 m_zkfpEng;
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnEnChangeEdit7();
 };
 void connect();
 wchar_t * ToWideChar(char * str);
