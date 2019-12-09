@@ -38,6 +38,7 @@ public:
 	afx_msg void OnBnClickedRadio2();
 	afx_msg void OnBnClickedOk5();
 	afx_msg void OnBnClickedOk3();
+	afx_msg void OnEnChangeEdit3();
 };
 int login(CString user, CString pass);
 bool getvoice(CString s);

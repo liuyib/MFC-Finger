@@ -45,6 +45,7 @@ ON_BN_CLICKED(IDC_RADIO1, &CLogin::OnBnClickedRadio1)
 ON_BN_CLICKED(IDC_RADIO2, &CLogin::OnBnClickedRadio2)
 ON_BN_CLICKED(IDOK5, &CLogin::OnBnClickedOk5)
 ON_BN_CLICKED(IDOK3, &CLogin::OnBnClickedOk3)
+ON_EN_CHANGE(IDC_EDIT3, &CLogin::OnEnChangeEdit3)
 END_MESSAGE_MAP()
 
 CString usera;
@@ -206,7 +207,7 @@ HBRUSH CLogin::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	else
 	{
 		pDC->SetBkMode(TRANSPARENT);
-		return (HBRUSH)::GetStockObject(NULL_BRUSH);
+		return (HBRUSH)::GetStockObject(WHITE_BRUSH);
 	}
 	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
 	return hbr;
@@ -330,3 +331,14 @@ void CLogin::OnBnClickedOk3()
 	}
 }
 
+
+
+void CLogin::OnEnChangeEdit3()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+}

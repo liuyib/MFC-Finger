@@ -60,6 +60,7 @@ BEGIN_MESSAGE_MAP(CRegistDlg, CDialog)
 	ON_BN_CLICKED(IDC_RADIO3, &CRegistDlg::OnBnClickedRadio3)
 	ON_BN_CLICKED(IDC_BUTTON1, &CRegistDlg::OnBnClickedButton1)
 	ON_EN_CHANGE(IDC_EDIT7, &CRegistDlg::OnEnChangeEdit7)
+	ON_EN_CHANGE(IDC_EDIT1, &CRegistDlg::OnEnChangeEdit1)
 END_MESSAGE_MAP()
 
 
@@ -297,6 +298,17 @@ void CRegistDlg::OnBnClickedButton1()
 
 
 void CRegistDlg::OnEnChangeEdit7()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialog::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+}
+
+
+void CRegistDlg::OnEnChangeEdit1()
 {
 	// TODO:  如果该控件是 RICHEDIT 控件，它将不
 	// 发送此通知，除非重写 CDialog::OnInitDialog()
