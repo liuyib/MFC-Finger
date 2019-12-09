@@ -50,26 +50,27 @@ END_MESSAGE_MAP()
 CString usera;
 CString namea;
 int guanliyuan = 0;
-//登录
+
+//登陆
 void CLogin::OnBnClickedOk()
 {
 	if (guanliyuan == 0) {
 		MessageBox(_T("请选择身份"));
 	}
 	else if (guanliyuan == 1) {
-		// TODO: 在此添加控件通知处理程序代码
+		// 普通用户(学生)登陆
 		CString c_user;
 		m_user.GetWindowText(c_user);
 		CString c_pass;
 		m_pass.GetWindowText(c_pass);
 		int ispipei = login(c_user, c_pass);
-		//MessageBox(_T(c_user),_T("tishi"));
 		if ((c_pass.GetLength() == 0) || c_user.GetLength() == 0) {
 			MessageBox(_T("请输入用户名密码"));
 		}
 		if (ispipei == 1) {
 			MessageBox(_T("登录成功"));
 			usera = c_user;
+			// 跳转到学生界面
 			StudentMainDlg studentDlg;
 			studentDlg.DoModal();
 		}
@@ -86,6 +87,7 @@ void CLogin::OnBnClickedOk()
 	}
 	else if (guanliyuan==2)
 	{
+		// 管理员(教师)登陆
 		CString c_user;
 		m_user.GetWindowText(c_user);
 		CString c_pass;
@@ -141,6 +143,8 @@ vector<string> split(const string &s, const string &seperator) {
 	}
 	return result;
 }
+
+// 根据用户名和密码登陆
 int login(CString user,CString pass) {
 	fstream fin("./Database\\login.txt");
 	string readlinea;
@@ -152,24 +156,18 @@ int login(CString user,CString pass) {
 		const char* card = arr[1].data();
 		const char* password = arr[2].data();
 		const char* name = arr[3].data();
-		/*char *name = "admin";
-		char *password = "admin";*/
 		CString temp1 = (CString)card;
 		CString temp2 = (CString)password;
 		CString temp3 = (CString)name;
-		//str1.CompareNoCase(str2)
 		if (user.Compare(temp1)==0 && pass.Compare(temp2)==0) {
+			// 匹配成功
 			isPipei = 1;
 			namea = temp3;
 			break;
 		}
 		if (user.Compare(temp1)) {
 			isPipei = 2;
-		}
-		
-		//GetDlgItemTextW(m_user,c_user);
-		//m_user.GetWindowText(c_user);
-		
+		}		
 	}
 	fin.close();
 	return isPipei;
@@ -214,7 +212,7 @@ HBRUSH CLogin::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-
+// 注册button逻辑
 void CLogin::OnBnClickedOk2()
 {
 	CString str1 = L"./fingerimages";
@@ -281,25 +279,23 @@ void CLogin::OnBnClickedOk5()
 
 void CLogin::OnBnClickedOk3()
 {
-	// TODO: 在此添加控件通知处理程序代码
-
 	if (guanliyuan == 0) {
 		MessageBox(_T("请选择身份"));
 	}
 	else if (guanliyuan == 1) {
-		// TODO: 在此添加控件通知处理程序代码
+		// 普通用户(学生)登陆
 		CString c_user;
 		m_user.GetWindowText(c_user);
 		CString c_pass;
 		m_pass.GetWindowText(c_pass);
 		int ispipei = login(c_user, c_pass);
-		//MessageBox(_T(c_user),_T("tishi"));
 		if ((c_pass.GetLength() == 0) || c_user.GetLength() == 0) {
 			MessageBox(_T("请输入用户名密码"));
 		}
 		if (ispipei == 1) {
 			MessageBox(_T("登录成功"));
 			usera = c_user;
+			// 跳转到学生界面
 			StudentMainDlg studentDlg;
 			studentDlg.DoModal();
 		}
@@ -316,11 +312,13 @@ void CLogin::OnBnClickedOk3()
 	}
 	else if (guanliyuan == 2)
 	{
+		// 管理员(教师)登陆
 		CString c_user;
 		m_user.GetWindowText(c_user);
 		CString c_pass;
 		m_pass.GetWindowText(c_pass);
 		if (c_user == "admin"&&c_pass == "admin") {
+
 			MessageBox(_T("管理员登陆成功"));
 			ManagerDlg mana;
 			mana.DoModal();

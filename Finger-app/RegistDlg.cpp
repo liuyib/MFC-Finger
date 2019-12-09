@@ -28,11 +28,8 @@ void CRegistDlg::OnImageReceivedZkfpengx(BOOL * AImageValid)
 	int y = 80;//图像绘制区左上角纵坐标
 	int width = m_zkfpEng.get_ImageWidth();//图像绘制区的宽度
 	int height = m_zkfpEng.get_ImageHeight();//图像绘制区的高度
-											 //makebmp();
-	//ShowImageInCtrl(r_picimg_1, "empty.bmp");
-	//ShowImageInCtrl(r_picimg_2, "empty.bmp");//清空图片
+
 	m_zkfpEng.PrintImageAt(int(hdc), x, y, width - 10, height);//绘制图像。
-															   //m_staticInfo.SetWindowText(ToWideChar(""));//清空字；
 
 }
 
@@ -105,6 +102,7 @@ vector<string> splita(const string &s, const string &seperator) {
 	return result;
 }
 
+// 确定button逻辑
 void CRegistDlg::OnBnClickedOk()
 {
 
@@ -162,8 +160,7 @@ void CRegistDlg::OnBnClickedOk()
 		MessageBox(_T("密码和确认密码不一致"));
 		return;
 	}
-	/*out << "This is another line.\n";
-	out.close();*/
+
 	CString rm_name;
 	r_name.GetWindowText(rm_name);
 	CString rm_card;
@@ -185,8 +182,6 @@ void CRegistDlg::OnBnClickedOk()
 	{
 		vector<string> arr = splita(readlinea, ",");
 		const char* name = arr[1].data();
-		/*char *name = "admin";
-		char *password = "admin";*/
 		CString temp1 = (CString)name;
 		
 		if (temp1.Compare(rm_name)==0) {
@@ -195,8 +190,6 @@ void CRegistDlg::OnBnClickedOk()
 			break;
 		}
 		id++;
-		//GetDlgItemTextW(m_user,c_user);
-		//m_user.GetWindowText(c_user);
 	}
 	in.close();
 	if (finda == 0) {
@@ -207,34 +200,8 @@ void CRegistDlg::OnBnClickedOk()
 		fout.close();
 	}
 	
-	// TODO: 在此添加控件通知处理程序代码
-	
 }
 
-void insertPicture() {
-	// TODO: 在此添加控件通知处理程序代码
-	void connect();
-	//初始化操作结果信息
-	char info[MAX_PATH] = { 0 };
-
-	//获取界面输入内容（登记人姓名）
-	//UpdateData(true);
-
-	//复制图像
-	char*srcImgFile = getimgnameandsave();
-
-	//指纹登记
-	bool bSaveImg = false;	//是否保存中间结果
-	char *outImgFile = new char[MAX_PATH];
-	//指纹特征结果图像文件名
-	//Enroll(ToChar(m_name.GetBuffer()), srcImgFile, outImgFile, info, bSaveImg);	//指纹登记			
-																				//MessageBox(_T("登记成功"), _T("提示"));//显示信息 
-																				//MessageBox(L"登记成功");
-	//m_staticInfo.SetWindowText(ToWideChar(info));
-	//显示图像
-	//ShowImageInCtrl(r_picimg_1, srcImgFile);	//显示原始指纹图像
-												//ShowImageInCtrl(m_picCtrl2, outImgFile);	//显示识别结果图像
-}
 
 void CRegistDlg::OnBnClickedRadio1()
 {
@@ -255,34 +222,10 @@ void CRegistDlg::OnBnClickedRadio3()
 	sexa = 2;
 }
 
-char* getimgnameandsave()
-{
-	//char *srcImgFile = NULL;
-	BOOL isOpen = TRUE;//为TRUE则显示打开文件对话框，为FALSE则显示保存文件对话框
-	//CString defaulDir = L"D:\\fingerimages";//默认打开的文件路径
-	//CString fileName = L"L01_01.bmp";//默认打开的文件名
-	//CString filter = L"文件（*.bmp;*.png;*.jpeg）|*.bmp;*.png;*.jpeg||";//文件过滤的类型；
-	//CFileDialog openFileDlg(isOpen, defaulDir, fileName, OFN_HIDEREADONLY | OFN_READONLY, filter, NULL);
-	//openFileDlg.GetOFN().lpstrInitialDir = L"D:\\fingerimages\\L01_01.bmp";
-	//INT_PTR result = openFileDlg.DoModal();
-	
-	CString filePath =  L"registimgs\\" + time(0);
-	
-	//复制图像
-	char *srcImgFile = new char[filePath.GetLength() + 1];
-	LPCTSTR p = filePath.GetBuffer(0);
-	filePath.ReleaseBuffer();
-	strcpy_s(srcImgFile, filePath.GetLength() + 1, CT2CA(p));
-	return srcImgFile;
-}
+
+// 将图片显示在空间中
 int ShowImageInCtrl(CStatic & picCtrl, char * filename)
 {
-
-	//清空系统界面上原先显示的图像文字
-	//HDC hdc = this->GetDC()->m_hDC;//获得显示设备上下文环境的句柄
-	//int x = 160;//图像绘制区左上角横坐标
-	//int y = 80;//图像绘制区左上角纵坐标
-	//m_zkfpEng.PrintImageAt(int(hdc), x, y, 0, 0);//绘制图像。//没实现
 	//载入图像
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(filename));
@@ -305,7 +248,7 @@ int ShowImageInCtrl(CStatic & picCtrl, char * filename)
 	return 0;
 }
 
-
+// 录取button逻辑
 void CRegistDlg::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -325,7 +268,6 @@ void CRegistDlg::OnBnClickedButton1()
 		CString rm_card;
 		r_card.GetWindowText(rm_card);
 		//保存
-		//CString fileName = L"L01_01.bmp";//默认打开的文件名
 		CString defaulDir = L"./fingerimages";//默认打开的文件路径
 		CString filename = rm_name + rm_card + ".bmp";
 
@@ -335,8 +277,7 @@ void CRegistDlg::OnBnClickedButton1()
 		char stepImgFile1[MAX_PATH] = { STEP_IMG };
 		CopyFile(filePath, ToWideChar(stepImgFile1), false);//复制文件，源，目标
 
-		
-															//在图片上展示图片
+		//在图片上展示图片
 		ShowImageInCtrl(r_picimg_1, STEP_IMG);
 		int a = 0;
 		a++;
