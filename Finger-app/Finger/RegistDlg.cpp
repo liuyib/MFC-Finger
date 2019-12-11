@@ -42,11 +42,25 @@ CRegistDlg::~CRegistDlg()
 void CRegistDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1, r_name);
+	DDX_Control(pDX, IDC_EDIT2, r_card);
+	DDX_Control(pDX, IDC_EDIT6, r_subject);
+	DDX_Control(pDX, IDC_EDIT5, r_class);
+	DDX_Control(pDX, IDC_EDIT3, r_pass);
+	DDX_Control(pDX, IDC_EDIT7, r_repass);
+	DDX_Control(pDX, IDC_STATIC_IMG_1, r_picimg_1);
+	/*DDX_Control(pDX, IDC_IMG1, r_picimg_2);
+	DDX_Control(pDX, IDC_STATIC_IMG_2, r_picimg_3);*/
+	DDX_Control(pDX, IDC_ZKFPENGX1, m_zkfpEng);
 }
 
 
 BEGIN_MESSAGE_MAP(CRegistDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, &CRegistDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDOK, &CRegistDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_RADIO1, &CRegistDlg::OnBnClickedRadio1)
+	ON_BN_CLICKED(IDC_RADIO3, &CRegistDlg::OnBnClickedRadio3)
+	ON_BN_CLICKED(IDC_BUTTON1, &CRegistDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -243,6 +257,6 @@ void CRegistDlg::OnBnClickedButton2()
 	sprintf(dstImgFile, "%s%s.bmp", "outfile//", regName);
 	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
 
-	//ShowImageInCtrl(r_picimg_1, beginfilename);
+	ShowImageInCtrl(r_picimg_1, beginfilename);
 	MessageBox(_T("指纹登记成功."), _T("提示"));//显示信息
 }
