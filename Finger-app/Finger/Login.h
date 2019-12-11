@@ -7,6 +7,7 @@
 #include "RegistDlg.h"
 #include "ManagerDlg.h"
 #include "StudentMainDlg.h"
+#include "FingerDlg.h"
 
 // CLogin 对话框
 
@@ -38,6 +39,7 @@ public:
 	afx_msg void OnBnClickedRadio2();
 	afx_msg void OnBnClickedOk5();
 	afx_msg void OnBnClickedOk3();
+	afx_msg void OnBnClickedOk10();
 	afx_msg void OnEnChangeEdit3();
 };
 int login(CString user, CString pass);

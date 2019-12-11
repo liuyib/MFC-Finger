@@ -42,6 +42,7 @@ BEGIN_MESSAGE_MAP(CLogin, CDialog)
 	ON_BN_CLICKED(IDC_RADIO2, &CLogin::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDOK5, &CLogin::OnBnClickedOk5)
 	ON_BN_CLICKED(IDOK3, &CLogin::OnBnClickedOk3)
+	ON_BN_CLICKED(IDOK10, &CLogin::OnBnClickedOk10)
 END_MESSAGE_MAP()
 
 
@@ -297,4 +298,10 @@ void CLogin::OnBnClickedOk3()
 			MessageBox(_T("用户名密码错误"));
 		}
 	}
+}
+
+void CLogin::OnBnClickedOk10()
+{
+	CFingerDlg m_fingerDlg;
+	m_fingerDlg.DoModal();
 }
