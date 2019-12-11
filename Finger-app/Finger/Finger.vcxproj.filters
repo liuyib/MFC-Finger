@@ -54,6 +54,9 @@
     <ClInclude Include="RegistDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="StudentMainDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Finger.cpp">
@@ -75,6 +78,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RegistDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StudentMainDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

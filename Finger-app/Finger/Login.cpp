@@ -71,13 +71,13 @@ void CLogin::OnBnClickedOk()
 			MessageBox(_T("登录成功"));
 			usera = c_user;
 			// 跳转到学生界面
-			/*StudentMainDlg studentDlg;
-			studentDlg.DoModal();*/
+			StudentMainDlg studentDlg;
+			studentDlg.DoModal();
 		}
 		else if (ispipei == 2) {
 			MessageBox(_T("该用户不存在,请注册"));
-			/*CRegistDlg m_registDlg;
-			m_registDlg.DoModal();*/
+			CRegistDlg m_registDlg;
+			m_registDlg.DoModal();
 
 		}
 		else
@@ -95,8 +95,8 @@ void CLogin::OnBnClickedOk()
 		if (c_user == "admin"&&c_pass == "admin") {
 
 			MessageBox(_T("管理员登陆成功"));
-			/*ManagerDlg mana;
-			mana.DoModal();*/
+			ManagerDlg mana;
+			mana.DoModal();
 		}
 		else
 		{
@@ -269,13 +269,13 @@ void CLogin::OnBnClickedOk3()
 			MessageBox(_T("登录成功"));
 			usera = c_user;
 			// 跳转到学生界面
-			/*StudentMainDlg studentDlg;
-			studentDlg.DoModal();*/
+			StudentMainDlg studentDlg;
+			studentDlg.DoModal();
 		}
 		else if (ispipei == 2) {
 			MessageBox(_T("该用户不存在,请注册"));
-			/*CRegistDlg m_registDlg;
-			m_registDlg.DoModal();*/
+			CRegistDlg m_registDlg;
+			m_registDlg.DoModal();
 
 		}
 		else
@@ -293,8 +293,8 @@ void CLogin::OnBnClickedOk3()
 		if (c_user == "admin"&&c_pass == "admin") {
 
 			MessageBox(_T("管理员登陆成功"));
-			/*ManagerDlg mana;
-			mana.DoModal();*/
+			ManagerDlg mana;
+			mana.DoModal();
 		}
 		else
 		{

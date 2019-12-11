@@ -6,6 +6,7 @@
 #include "afxwin.h"
 #include "RegistDlg.h"
 #include "ManagerDlg.h"
+#include "StudentMainDlg.h"
 
 // CLogin 对话框
 

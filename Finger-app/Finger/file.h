@@ -270,3 +270,86 @@ vector<string> splita(const string &s, const string &seperator) {
 	}
 	return result;
 }
+
+vector<string> splitc(const string &s, const string &seperator) {
+	vector<string> result;
+	typedef string::size_type string_size;
+	string_size i = 0;
+
+	while (i != s.size()) {
+		//找到字符串中首个不等于分隔符的字母；
+		int flag = 0;
+		while (i != s.size() && flag == 0) {
+			flag = 1;
+			for (string_size x = 0; x < seperator.size(); ++x)
+				if (s[i] == seperator[x]) {
+					++i;
+					flag = 0;
+					break;
+				}
+		}
+
+		//找到又一个分隔符，将两个分隔符之间的字符串取出；
+		flag = 0;
+		string_size j = i;
+		while (j != s.size() && flag == 0) {
+			for (string_size x = 0; x < seperator.size(); ++x)
+				if (s[j] == seperator[x]) {
+					flag = 1;
+					break;
+				}
+			if (flag == 0)
+				++j;
+		}
+		if (i != j) {
+			result.push_back(s.substr(i, j - i));
+			i = j;
+		}
+	}
+	return result;
+}
+
+
+CString getNowTImeH1() {
+	CString str; //获取系统时间 　　
+
+	CTime tm; tm = CTime::GetCurrentTime();
+
+	str = tm.Format("%Y_%m_%d");
+
+	return str;
+}
+
+CString getNowTImeA() {
+	CString str; //获取系统时间 　　
+
+	CTime tm; tm = CTime::GetCurrentTime();
+
+	str = tm.Format("%Y-%m-%d %X");
+
+	return str;
+}
+
+
+void writeInto(const char *fileName)
+{
+	ifstream in;
+	char line[1024] = { '\0' };
+	in.open("Database\\login.txt");
+	int i = 0;
+	string tempStr;
+	while (in.getline(line, sizeof(line)))
+	{
+		i++;
+		vector<string> arr = splitc(line, ",");
+		tempStr += arr[1] + ",null" + "," + to_string(0);
+		tempStr += '\n';
+	}
+	in.close();
+	ofstream out;
+	out.open(fileName);
+	out.flush();
+	out << tempStr;
+	out.close();
+}
+
