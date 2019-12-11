@@ -24,6 +24,10 @@ CRegistDlg::CRegistDlg(CWnd* pParent /*=nullptr*/)
 
 }
 
+int da1 = 0;
+CString strFile1 = _T("");
+int mode = 0;// 1是导入图片 2是指纹采集
+
 void CRegistDlg::OnImageReceivedZkfpengx(BOOL * AImageVaild)
 {
 	m_zkfpEng.SaveBitmap(_T("outfile\\capt.bmp"));
@@ -65,6 +69,38 @@ END_MESSAGE_MAP()
 
 
 // CRegistDlg 消息处理程序
+
+void CRegistDlg::dengji()
+{
+	char *info = "";
+	USES_CONVERSION;
+	CString str;
+	r_name.GetWindowText(str);
+	char * name = T2A(str);
+	int len = strlen(name);
+	if (len == 0) {
+		MessageBox(_T("请输入登记名."), _T("提示"));
+		return;
+	}
+	char * beginfilename = T2A(strFile1);
+	strFile1 = "outfile\\capt.bmp";
+	beginfilename = T2A(strFile1);
+	Step1_LoadBmpImage(beginfilename, info);
+	Step2_MidFilter(beginfilename, info);
+	Step3_HistoNormalize(info);
+	Step4_Direction(info);
+	Step5_Frequency(info);
+	Step6_GetMask(info);
+	Step7_GaborEnhance(info);
+	Step8_Binary(info);
+	Step9_Thinning(info);
+	Step10_MinuExtract(info);
+	Step11_MinuFilter(info);
+	r_name.GetWindowText(str);
+	name = T2A(str);
+	beginfilename = T2A(strFile1);
+	Step12_Enroll(beginfilename, name, info);
+}
 
 // 确定button逻辑
 void CRegistDlg::OnBnClickedOk()
@@ -160,6 +196,9 @@ void CRegistDlg::OnBnClickedOk()
 		fstream fout("Database\\login.txt", ios::app);
 
 		fout << (id + 1) << "," << strSt1 << "," << strSt2 << "," << strSt3 << "," << strSt4 << "," << strSt5 << "," << sexa << "," << "" << endl;
+		
+		dengji();
+		
 		MessageBox(_T("注册成功"));
 		fout.close();
 	}
@@ -178,9 +217,7 @@ void CRegistDlg::OnBnClickedRadio3()
 	sexa = 2;
 }
 
-int da1 = 0;
-CString strFile1 = _T("");
-int mode = 0;// 1是导入图片 2是指纹采集
+
 
 
 
@@ -197,24 +234,7 @@ void CRegistDlg::OnBnClickedButton1()
 	if (z == 0) {
 		MessageBox(_T("指纹获取成功."), _T("提示"));//显示信息
 
-		//对注册学生进行指纹采集
-		CString rm_name;
-		r_name.GetWindowText(rm_name);
-		CString rm_card;
-		r_card.GetWindowText(rm_card);
-		//保存
-		CString defaulDir = L"./fingerimages";//默认打开的文件路径
-		CString filename = rm_name + rm_card + ".bmp";
 
-		CString filePath = defaulDir + "\\" + filename;
-		//指定名称，指定路径
-		m_zkfpEng.SaveBitmap(filePath);
-		//char stepImgFile1[MAX_PATH] = { STEP_IMG };
-		//CopyFile(filePath, ToWideChar(stepImgFile1), false);//复制文件，源，目标
-
-
-		//在图片上展示图片
-		/*ShowImageInCtrl(r_picimg_1, STEP_IMG);*/
 		int a = 0;
 		a++;
 		return;
@@ -258,5 +278,5 @@ void CRegistDlg::OnBnClickedButton2()
 	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
 
 	ShowImageInCtrl(r_picimg_1, beginfilename);
-	MessageBox(_T("指纹登记成功."), _T("提示"));//显示信息
+	MessageBox(_T("指纹录入成功."), _T("提示"));//显示信息
 }

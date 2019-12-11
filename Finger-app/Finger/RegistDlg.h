@@ -28,7 +28,9 @@ public:
 	CEdit r_card;
 	CEdit r_subject;
 	CEdit r_class;
-	afx_msg void OnBnClickedOk();
+	afx_msg
+		void dengji();
+	void OnBnClickedOk();
 	int male;
 	int female;
 	afx_msg void OnBnClickedRadio1();
