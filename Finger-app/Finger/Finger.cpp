@@ -42,6 +42,7 @@ BOOL CFingerApp::InitInstance()
 
 
 	AfxEnableControlContainer();
+	skinppLoadSkin("./skin/RisingDragon.ssk");
 
 	// 创建 shell 管理器，以防对话框包含
 	// 任何 shell 树视图控件或 shell 列表视图控件。

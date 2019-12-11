@@ -216,10 +216,6 @@ HBRUSH CLogin::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 // 注册button逻辑
 void CLogin::OnBnClickedOk2()
 {
-	CString str1 = L"./fingerimages";
-	CreateDirectory(str1, NULL);
-	CString str2 = L"./temp";
-	CreateDirectory(str2, NULL);
 	CString str3 = L"./Database";
 	CreateDirectory(str3, NULL);
 	// TODO: 在此添加控件通知处理程序代码
