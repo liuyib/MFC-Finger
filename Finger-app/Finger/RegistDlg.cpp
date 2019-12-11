@@ -46,6 +46,7 @@ void CRegistDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CRegistDlg, CDialog)
+	ON_BN_CLICKED(IDC_BUTTON2, &CRegistDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -217,3 +218,31 @@ void CRegistDlg::OnBnClickedButton1()
 }
 
 
+
+
+void CRegistDlg::OnBnClickedButton2()
+{
+	mode = 1;
+	CFileDialog dlgFile(TRUE, NULL, NULL, OFN_HIDEREADONLY, _T("Describe Files (*.bmp)|*.bmp|All Files (*.*)|*.*||"), NULL);
+	da1 = 1;
+	char *info = "";
+	if (dlgFile.DoModal())
+	{
+		strFile1 = dlgFile.GetPathName();
+	}
+	USES_CONVERSION;
+	char * beginfilename = T2A(strFile1);
+
+	Step1_LoadBmpImage(beginfilename, info);
+
+
+	char *srcImgFile = beginfilename;
+	char dstImgFile[MAX_PATH] = { 0 };
+	char regName[MAX_PATH] = { 0 };
+	sprintf(regName, "capt");
+	sprintf(dstImgFile, "%s%s.bmp", "outfile//", regName);
+	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
+
+	//ShowImageInCtrl(r_picimg_1, beginfilename);
+	MessageBox(_T("指纹登记成功."), _T("提示"));//显示信息
+}

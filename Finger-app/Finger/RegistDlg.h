@@ -42,5 +42,6 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnEnChangeEdit7();
 	afx_msg void OnEnChangeEdit1();
+	afx_msg void OnBnClickedButton2();
 };
 wchar_t * ToWideChar(char * str);
