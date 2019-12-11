@@ -5,7 +5,8 @@
 #include<iostream>
 #include<atlimage.h>
 #include<iomanip>
-
+#include<string>
+#include<vector>
 using namespace std;
 // vs 编码为gbk
 void Sort(unsigned char*data, int dsize) {
@@ -204,20 +205,68 @@ int ReadDatafromTextFile(char* srcFile, float* data, int iWidth, int iHeight) {
 }
 
 
-int ShowImageInCtrl(CStatic &picCtrl,char *filename) {
+
+// 将图片显示在空间中
+int ShowImageInCtrl(CStatic & picCtrl, char * filename)
+{
+	//载入图像
 	CImage image;
 	HRESULT hResult = image.Load(ToWideChar(filename));
-	int width = image.GetWidth();	
-	int height = image.GetHeight();
-
-	CRect rect;
-	picCtrl.GetClientRect(&rect);
-	CDC *pDc = picCtrl.GetWindowDC();
-	SetStretchBltMode(pDc->m_hDC,STRETCH_HALFTONE);
-	image.StretchBlt(pDc->m_hAttribDC,rect,SRCCOPY);
-	picCtrl.Invalidate(false);
+	int width = image.GetWidth();//图像宽度
+	int height = image.GetHeight();//图像高度
+								   //设置显示区域
+	CRect rect;//定义矩形对象
+	picCtrl.GetClientRect(&rect);//获得pictrue控件所在的矩形区域
+	CDC *pDc = picCtrl.GetWindowDC();//获得picture控件的设置环境句柄
+	SetStretchBltMode(pDc->m_hDC, STRETCH_HALFTONE);//设置位图拉伸模式
+													//显示图像
+	image.StretchBlt(pDc->m_hDC, rect, SRCCOPY);//将图像画到picture控件表示的矩形区域
+												//更新控件显示
+	picCtrl.Invalidate(false);//更新控件显示
+							  //释放变量空间
 	image.Destroy();
-	picCtrl.ReleaseDC(pDc);
+	picCtrl.ReleaseDC(pDc);//释放picture控件的设置环境句柄
+
+
 	return 0;
 }
 
+
+
+vector<string> splita(const string &s, const string &seperator) {
+	vector<string> result;
+	typedef string::size_type string_size;
+	string_size i = 0;
+
+	while (i != s.size()) {
+		//找到字符串中首个不等于分隔符的字母；
+		int flag = 0;
+		while (i != s.size() && flag == 0) {
+			flag = 1;
+			for (string_size x = 0; x < seperator.size(); ++x)
+				if (s[i] == seperator[x]) {
+					++i;
+					flag = 0;
+					break;
+				}
+		}
+
+		//找到又一个分隔符，将两个分隔符之间的字符串取出；
+		flag = 0;
+		string_size j = i;
+		while (j != s.size() && flag == 0) {
+			for (string_size x = 0; x < seperator.size(); ++x)
+				if (s[j] == seperator[x]) {
+					flag = 1;
+					break;
+				}
+			if (flag == 0)
+				++j;
+		}
+		if (i != j) {
+			result.push_back(s.substr(i, j - i));
+			i = j;
+		}
+	}
+	return result;
+}

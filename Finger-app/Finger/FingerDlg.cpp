@@ -161,6 +161,14 @@ void CFingerDlg::OnBnClickedOk2()
 
 	Step1_LoadBmpImage(beginfilename, info);
 
+
+	char *srcImgFile = beginfilename;
+	char dstImgFile[MAX_PATH] = { 0 };
+	char regName[MAX_PATH] = { 0 };
+	sprintf(regName, "capt");
+	sprintf(dstImgFile, "%s%s.bmp", "outfile//", regName);
+	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
+
 	ShowImageInCtrl(m_picCtrl1, beginfilename);
 
 	// TODO: 在此添加控件通知处理程序代码

@@ -43,8 +43,4 @@ public:
 	afx_msg void OnEnChangeEdit7();
 	afx_msg void OnEnChangeEdit1();
 };
-void connect();
 wchar_t * ToWideChar(char * str);
-char * ToChar(wchar_t * str);
-//std::time_t getTimeStamp();
-char* getimgnameandsave();
