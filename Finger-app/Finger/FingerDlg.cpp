@@ -1,7 +1,7 @@
 
 // FingerDlg.cpp : 实现文件
 //
-
+#pragma once
 #include "stdafx.h"
 #include "Finger.h"
 #include "FingerDlg.h"

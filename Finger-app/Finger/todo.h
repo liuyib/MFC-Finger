@@ -1,3 +1,4 @@
+#pragma once
 #include<fstream>
 #include<memory.h>
 #include<string.h>

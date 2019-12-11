@@ -1,11 +1,11 @@
 ﻿// RegistDlg.cpp: 实现文件
 //
-
+#pragma once
 #include "stdafx.h"
 #include "Finger.h"
 #include "RegistDlg.h"
 #include "afxdialogex.h"
-//#include "step.h"
+#include "step.h"
 
 using namespace std;
 int sexa = 0;
@@ -29,10 +29,10 @@ void CRegistDlg::OnImageReceivedZkfpengx(BOOL * AImageVaild)
 	m_zkfpEng.SaveBitmap(_T("outfile\\capt.bmp"));
 	char *info = "";
 	USES_CONVERSION;
-	//strFile = "outfile\\capt.bmp";
-	//char * beginfilename = T2A(strFile);
-	/*Step1_LoadBmpImage(beginfilename, info);
-	ShowImageInCtrl(r_picimg_1, beginfilename);*/
+	CString strFile = L"outfile\\capt.bmp";
+	char * beginfilename = T2A(strFile);
+	Step1_LoadBmpImage(beginfilename, info);
+	ShowImageInCtrl(r_picimg_1, beginfilename);
 }
 
 CRegistDlg::~CRegistDlg()

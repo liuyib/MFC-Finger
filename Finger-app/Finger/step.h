@@ -1,4 +1,5 @@
 #pragma once
+
 #include "todo.h"
 #include<time.h>
 #include <vector>
@@ -14,7 +15,7 @@ using namespace std;
 
 #pragma comment (lib,"Ws2_32.lib")
 
-int minuCount = 0;
+
 
 #define STEP_TXT_1 "outfile\\step1.txt"
 #define STEP_IMG_2 "outfile\\step2_MidFilter.bmp"
@@ -41,7 +42,9 @@ int minuCount = 0;
 #define STEP_IMG_12 "outfile\\step12_Result.bmp"
 
 
-int Step1_LoadBmpImage(char *beginfilename,char* info) {
+int minuCount = 0;
+
+int Step1_LoadBmpImage(char *beginfilename, char* info) {
 	char *filename = beginfilename;
 	CopyFile(ToWideChar(filename), ToWideChar(STEP_TXT_1), false);
 
@@ -72,8 +75,11 @@ int Step1_LoadBmpImage(char *beginfilename,char* info) {
 	return 0;
 }
 
-int Step2_MidFilter(char *beginfilename,char* info) {
-	char srcTxtFile[] = STEP_TXT_1; 
+
+
+
+int Step2_MidFilter(char *beginfilename, char* info) {
+	char srcTxtFile[] = STEP_TXT_1;
 	char *srcImgFile = beginfilename;
 	char dstTxtFile[] = STEP_TXT_2;
 	char dstImgFile[] = STEP_IMG_2;
@@ -120,13 +126,13 @@ int Step4_Direction(char* info) {
 	unsigned char *image1 = new unsigned char[iWidth*iHeight];
 	ReadDatafromTextFile(srcTxtFile, image1, iWidth, iHeight);
 	float *tmpDirections = new float[iWidth*iHeight];
-	ImgDirection(image1, tmpDirections,iWidth,iHeight);
+	ImgDirection(image1, tmpDirections, iWidth, iHeight);
 	float *directions = new float[iWidth*iHeight];
-	DircLowPass(tmpDirections,directions,iWidth,iHeight);
+	DircLowPass(tmpDirections, directions, iWidth, iHeight);
 	//SaveDataToTextFile(dstTxtFile_fx, tmpDirections, iWidth, iHeight);
-	SaveDataToTextFile(dstTxtFile,directions,iWidth,iHeight);
+	SaveDataToTextFile(dstTxtFile, directions, iWidth, iHeight);
 	const int DIRECTION_SCALE = 100;
-	SaveDataToImageFile(srcImgFile,dstImgFile,directions,DIRECTION_SCALE);
+	SaveDataToImageFile(srcImgFile, dstImgFile, directions, DIRECTION_SCALE);
 	delete[] image1;
 	delete[] tmpDirections;
 	delete[] directions;
@@ -148,7 +154,7 @@ int Step5_Frequency(char* info) {
 	ReadDatafromTextFile(srcTxtFile_Dir, direction, iWidth, iHeight);
 
 	float *frequency = new float[iWidth*iHeight];
-	Frequency(image1,direction,frequency,iWidth,iHeight);
+	Frequency(image1, direction, frequency, iWidth, iHeight);
 
 	SaveDataToTextFile(dstTxtFile, frequency, iWidth, iHeight);
 
@@ -174,12 +180,12 @@ int Step6_GetMask(char *info) {
 	float *direction = new float[iWidth*iHeight];
 	ReadDatafromTextFile(srcTxtFile_Dir, direction, iWidth, iHeight);
 	float *frequency = new float[iWidth*iHeight];
-	ReadDatafromTextFile(srcTxtFile_Fre,frequency,iWidth,iHeight);
+	ReadDatafromTextFile(srcTxtFile_Fre, frequency, iWidth, iHeight);
 	unsigned char* mask = new unsigned char[iWidth*iHeight];
-	GetMask(image1,direction,frequency,mask,iWidth,iHeight);
+	GetMask(image1, direction, frequency, mask, iWidth, iHeight);
 
-	SaveDataToTextFile(dstTxtFile,mask,iWidth,iHeight);
-	SaveDataToImageFile(srcImgFile,dstImgFile,mask);
+	SaveDataToTextFile(dstTxtFile, mask, iWidth, iHeight);
+	SaveDataToImageFile(srcImgFile, dstImgFile, mask);
 	delete[] image1;
 	delete[] mask;
 	delete[] direction;
@@ -207,10 +213,10 @@ int Step7_GaborEnhance(char *info) {
 	ReadDatafromTextFile(srcTxtFile_Msk, mask, iWidth, iHeight);
 
 	unsigned char* image2 = new unsigned char[iWidth*iHeight];
-	GaborEnhance(image1,direction,frequency,mask,image2,iWidth,iHeight);
+	GaborEnhance(image1, direction, frequency, mask, image2, iWidth, iHeight);
 
-	SaveDataToTextFile(dstTxtFile,image2,iWidth,iHeight);
-	SaveDataToImageFile(srcImgFile,dstImgFile,image2);
+	SaveDataToTextFile(dstTxtFile, image2, iWidth, iHeight);
+	SaveDataToImageFile(srcImgFile, dstImgFile, image2);
 
 	delete[] image1;
 	delete[] direction;
@@ -231,12 +237,12 @@ int Step8_Binary(char *info) {
 	ReadDatafromTextFile(srcTxtFile, image1, iWidth, iHeight);
 
 	unsigned char *image2 = new unsigned char[iWidth*iHeight];
-	BinaryImg(image1,image2,iWidth,iHeight,128);
+	BinaryImg(image1, image2, iWidth, iHeight, 128);
 
-	SaveDataToTextFile(dstTxtFile,image2,iWidth,iHeight);
+	SaveDataToTextFile(dstTxtFile, image2, iWidth, iHeight);
 
-	BinaryToGray(image2,image1,iWidth,iHeight);
-	SaveDataToImageFile(srcImgFile,dstImgFile,image1);
+	BinaryToGray(image2, image1, iWidth, iHeight);
+	SaveDataToImageFile(srcImgFile, dstImgFile, image1);
 
 	delete[] image1;
 	delete[] image2;
@@ -252,7 +258,7 @@ int Step9_Thinning(char *info) {
 
 	int iWidth, iHeight, iDepth;
 	ReadBMPImgFilePara(srcImgFile, iWidth, iHeight, iDepth);
-	
+
 	unsigned char *image1 = new unsigned char[iWidth*iHeight];
 	ReadDatafromTextFile(srcTxtFile, image1, iWidth, iHeight);
 
@@ -262,7 +268,7 @@ int Step9_Thinning(char *info) {
 	SaveDataToTextFile(dstTxtFile, image2, iWidth, iHeight);
 
 	BinaryToGray(image2, image1, iWidth, iHeight);
-	SaveDataToImageFile(srcImgFile, dstImgFile ,image1);
+	SaveDataToImageFile(srcImgFile, dstImgFile, image1);
 
 	delete[] image1;
 	delete[] image2;
@@ -316,12 +322,12 @@ int Step11_MinuFilter(char *info) {
 
 	unsigned char *thin = new unsigned char[iWidth*iHeight];
 	ReadDatafromTextFile(srcTxtFile_Thin, thin, iWidth, iHeight);
-	
-	MINUTIAE *minutiaes = new MINUTIAE[minuCount];
-	memset(minutiaes,sizeof(MINUTIAE),minuCount);
-	MinuFilter(image1,thin,minutiaes,minuCount,iWidth,iHeight);
 
-	SaveMinutiae(minutiaes,minuCount,dstMdlFile);
+	MINUTIAE *minutiaes = new MINUTIAE[minuCount];
+	memset(minutiaes, sizeof(MINUTIAE), minuCount);
+	MinuFilter(image1, thin, minutiaes, minuCount, iWidth, iHeight);
+
+	SaveMinutiae(minutiaes, minuCount, dstMdlFile);
 
 	unsigned char *image2 = new unsigned char[iWidth*iHeight];
 	memset(image2, 0, iWidth*iHeight);
@@ -339,24 +345,24 @@ int Step11_MinuFilter(char *info) {
 	return 0;
 }
 
-int Step12_Enroll(char *filename ,char* userName,char *info){
+int Step12_Enroll(char *filename, char* userName, char *info) {
 	char *srcImgFile = filename;
 	char srcMdlFile[MAX_PATH] = { STEP_IMG_11_MDL };
 	char regName[MAX_PATH] = { 0 };
 	char dstImgFile[MAX_PATH] = { 0 };
 	char dstMDlFile[MAX_PATH] = { 0 };
-	sprintf(regName,userName);
-	sprintf(dstImgFile, "%s%s.bmp", "databases//",regName);
-	sprintf(dstMDlFile, "%s%s.mdl", "databases//",regName);
+	sprintf(regName, userName);
+	sprintf(dstImgFile, "%s%s.bmp", "databases//", regName);
+	sprintf(dstMDlFile, "%s%s.mdl", "databases//", regName);
 
 	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
 	CopyFile(ToWideChar(srcMdlFile), ToWideChar(dstMDlFile), false);
 	return 0;
 }
 
-int Step12_Match(char *beginname,char *mdlfile,char *info) {
+int Step12_Match(char *beginname, char *mdlfile, char *info) {
 	char *srcImgFile = beginname;
-	char *srcMDlFile = {STEP_IMG_11_MDL};
+	char *srcMDlFile = { STEP_IMG_11_MDL };
 	char *dstMdlile = mdlfile;
 	char dstImgFile[] = STEP_IMG_12;
 
@@ -365,15 +371,15 @@ int Step12_Match(char *beginname,char *mdlfile,char *info) {
 
 	MINUTIAE *minu1 = NULL, *minu2 = NULL;
 	int minuAccount1 = 0, minuAccount2 = 0;
-	minuAccount1 = ReadMinutiae(srcMDlFile,&minu1);
+	minuAccount1 = ReadMinutiae(srcMDlFile, &minu1);
 	minuAccount2 = ReadMinutiae(dstMdlile, &minu2);
 
-	float similar = MinuSimilarity(iWidth,iHeight,minu1,minuAccount1,minu2,minuAccount2);
+	float similar = MinuSimilarity(iWidth, iHeight, minu1, minuAccount1, minu2, minuAccount2);
 
 	delete[] minu1;
 	delete[] minu2;
-	CopyFile(ToWideChar(srcImgFile),ToWideChar(dstImgFile),false);
-	sprintf(mdlfile,"%s %lf",mdlfile,similar);
+	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
+	sprintf(mdlfile, "%s %lf", mdlfile, similar);
 	CString name(mdlfile);
 	CString ok("YES ");
 	CString no("NO ");
@@ -382,11 +388,11 @@ int Step12_Match(char *beginname,char *mdlfile,char *info) {
 		//MessageBox(NULL, no + name, _T("No"), MB_OK);
 		return 0;
 	}
-	MessageBox(NULL, ok+name, _T("OK"), MB_OK);
+	MessageBox(NULL, ok + name, _T("OK"), MB_OK);
 	return 1;
 }
 
-int Step12_Identify(char *beginname ,char *info) {
+int Step12_Identify(char *beginname, char *info) {
 
 	vector<CString> m_FileList;
 	CString csDirPath = _T("databases//*.mdl");
@@ -397,7 +403,7 @@ int Step12_Identify(char *beginname ,char *info) {
 	{
 		CString ofilename = fileData.cFileName;
 		CString basepa("databases//");
-		CString s = basepa + ofilename ;
+		CString s = basepa + ofilename;
 		m_FileList.push_back(s);
 		bool bState = false;
 		bState = FindNextFile(file, &fileData);
@@ -410,7 +416,7 @@ int Step12_Identify(char *beginname ,char *info) {
 	}
 
 	for (int len = 0; len < m_FileList.size(); len++) {
-		CString fn = m_FileList[len]; 
+		CString fn = m_FileList[len];
 		USES_CONVERSION;
 		char * matchName = T2A(fn);
 		Step12_Match(beginname, matchName, info);
