@@ -414,13 +414,17 @@ int Step12_Identify(char *beginname, char *info) {
 			bState = FindNextFile(file, &fileData);
 		}
 	}
-
+	int cnt = 0;
 	for (int len = 0; len < m_FileList.size(); len++) {
 		CString fn = m_FileList[len];
 		USES_CONVERSION;
 		char * matchName = T2A(fn);
-		Step12_Match(beginname, matchName, info);
+		int res = Step12_Match(beginname, matchName, info);
+		if (res == 1)
+			cnt++;
 	}
-	return 0;
-
+	if (cnt != 0)
+		return 1;
+	else
+		return 0;
 }

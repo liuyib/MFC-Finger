@@ -232,6 +232,15 @@ void CRegistDlg::OnBnClickedButton1()
 	Sleep(3000);
 	int a = 1;
 	if (z == 0) {
+
+		m_zkfpEng.SaveBitmap(_T("outfile\\capt.bmp"));
+		char *info = "";
+		USES_CONVERSION;
+		CString strFile = L"outfile\\capt.bmp";
+		char * beginfilename = T2A(strFile);
+		Step1_LoadBmpImage(beginfilename, info);
+		ShowImageInCtrl(r_picimg_1, beginfilename);
+
 		MessageBox(_T("指纹获取成功."), _T("提示"));//显示信息
 
 

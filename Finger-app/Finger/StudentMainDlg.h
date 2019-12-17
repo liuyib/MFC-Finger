@@ -23,6 +23,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	BOOL StudentMainDlg::OnInitDialog();
 	DECLARE_MESSAGE_MAP()
+	afx_msg void OnImageReceivedZkfpengx(BOOL FAR* AImageVaild);
 public:
 	CEdit s_name;
 	CEdit s_card;
@@ -34,6 +35,8 @@ public:
 	afx_msg void OnBnClickedRadio3();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButton1();
+	int shibie();
+	afx_msg void OnBnClickedButton2();
 };
 CString getNowTIme();
 void modifyContentInFile(char *fileName, CString linecard, int a);

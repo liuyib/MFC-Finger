@@ -11,8 +11,10 @@
 #include"Login.h"
 #include "file.h"
 #include "CZKFPEngX.h"//引入指纹采集器SDK
+#include "step.h"
 
 int isclass = 0;
+CString strFile2 = _T("");
 // StudentMainDlg 对话框
 using namespace std;
 IMPLEMENT_DYNAMIC(StudentMainDlg, CDialog)
@@ -61,7 +63,18 @@ BEGIN_MESSAGE_MAP(StudentMainDlg, CDialog)
 	ON_BN_CLICKED(IDC_RADIO3, &StudentMainDlg::OnBnClickedRadio3)
 	ON_BN_CLICKED(IDOK, &StudentMainDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTON1, &StudentMainDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &StudentMainDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
+
+void StudentMainDlg::OnImageReceivedZkfpengx(BOOL FAR* AImageValid) {
+	m_zkfpEng.SaveBitmap(_T("outfile\\capt.bmp"));
+	char *info = "";
+	USES_CONVERSION;
+	CString strFile = L"outfile\\capt.bmp";
+	char * beginfilename = T2A(strFile);
+	Step1_LoadBmpImage(beginfilename, info);
+	ShowImageInCtrl(m_pic, beginfilename);
+}
 
 
 // StudentMainDlg 消息处理程序
@@ -221,6 +234,13 @@ void StudentMainDlg::OnBnClickedOk()
 		return;
 	}
 	fin.close();
+
+	int res = shibie();
+	if (res == 0) {
+		MessageBox(_T("签到失败"));
+		return;
+	}
+
 	modifyContentInFile(bbb.data(), usera, isclass);
 
 	if (ishasbegin == 1) {
@@ -254,6 +274,16 @@ void StudentMainDlg::OnBnClickedButton1()
 	Sleep(3000);
 	int a = 1;
 	if (z == 0) {
+
+		m_zkfpEng.SaveBitmap(_T("outfile\\capt.bmp"));
+		char *info = "";
+		USES_CONVERSION;
+		CString strFile = L"outfile\\capt.bmp";
+		char * beginfilename = T2A(strFile);
+		Step1_LoadBmpImage(beginfilename, info);
+		ShowImageInCtrl(m_pic, beginfilename);
+
+
 		//MessageBox(_T("采集器连接成功."), _T("提示"));//显示信息
 		MessageBox(L"采集指纹成功");
 
@@ -278,4 +308,52 @@ void StudentMainDlg::OnBnClickedButton1()
 	{
 		MessageBox(L"a" + z);
 	}
+}
+
+int StudentMainDlg::shibie()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	char *info = "";
+	USES_CONVERSION;
+	CString strFile = L"outfile\\capt.bmp";
+	char * beginfilename = T2A(strFile);
+	Step1_LoadBmpImage(beginfilename, info);
+	Step2_MidFilter(beginfilename, info);
+	Step3_HistoNormalize(info);
+	Step4_Direction(info);
+	Step5_Frequency(info);
+	Step6_GetMask(info);
+	Step7_GaborEnhance(info);
+	Step8_Binary(info);
+	Step9_Thinning(info);
+	Step10_MinuExtract(info);
+	Step11_MinuFilter(info);
+	beginfilename = T2A(strFile);
+	return Step12_Identify(beginfilename, info);
+}
+
+void StudentMainDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CFileDialog dlgFile(TRUE, NULL, NULL, OFN_HIDEREADONLY, _T("Describe Files (*.bmp)|*.bmp|All Files (*.*)|*.*||"), NULL);
+	char *info = "";
+	if (dlgFile.DoModal())
+	{
+		strFile2 = dlgFile.GetPathName();
+	}
+	USES_CONVERSION;
+	char * beginfilename = T2A(strFile2);
+
+	Step1_LoadBmpImage(beginfilename, info);
+
+
+	char *srcImgFile = beginfilename;
+	char dstImgFile[MAX_PATH] = { 0 };
+	char regName[MAX_PATH] = { 0 };
+	sprintf(regName, "capt");
+	sprintf(dstImgFile, "%s%s.bmp", "outfile//", regName);
+	CopyFile(ToWideChar(srcImgFile), ToWideChar(dstImgFile), false);
+
+	ShowImageInCtrl(m_pic, beginfilename);
+	MessageBox(_T("指纹录入成功."), _T("提示"));//显示信息
 }
