@@ -109,7 +109,7 @@ void ManagerDlg::OnBnClickedButton3()
 		fstream fin(ddd);
 		string readlinea;
 		int isPipei = 0;
-		string tempStr = "学号\t时间\t\t详情\n";;
+		string tempStr = "学号\t时间\t\t详情\n";
 		int isnull = 0;
 		while (getline(fin, readlinea)) {
 

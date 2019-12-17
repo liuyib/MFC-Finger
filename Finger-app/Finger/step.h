@@ -383,7 +383,7 @@ int Step12_Match(char *beginname, char *mdlfile, char *info) {
 	CString name(mdlfile);
 	CString ok("YES ");
 	CString no("NO ");
-	const float SIMILAR_THRED = 0.5;
+	const float SIMILAR_THRED = 0.8;
 	if (similar < SIMILAR_THRED) {
 		//MessageBox(NULL, no + name, _T("No"), MB_OK);
 		return 0;
